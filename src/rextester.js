@@ -23,7 +23,7 @@ function parseCode(code, languageObject, imports) {
     return code;
 }
 
-async function outputResult(language, code, compilerArgs, callback) {
+async function outputResult(language, code, compilerArgs) {
     let requestResponse,
         rextesterResponse;
     try {
@@ -74,44 +74,47 @@ async function outputResult(language, code, compilerArgs, callback) {
             };
         }
     }
-    return callback(requestResponse);
+    return requestResponse;
 }
 
-async function handleRequest(language, code, imports, callback) {
+async function handleRequest(language, code, imports) {
     let compilerArgs;
 
     if (!code || !code[0] ) {
-        return callback( {
+        return {
             payload: 'no code/lang???',
             error: false,
             code: 400,
-        } );
+        };
     }
 
     code = code.split(' ');
 
     const languageObject = languageProperties.languageProperties.find(curobject => curobject.aliases.includes(language.toString() ) );
 
-    if (!languageObject) return callback( {
-        payload: 'Unsupported language',
-        error: false,
-        code: 400,
-    } );
+    if (!languageObject) {
+        return {
+            payload: 'Unsupported language',
+            error: false,
+            code: 400,
+        };
+    }
 
     code.join(' ');
     if (languageObject.defaultImports.length > 0 || languageObject.classDeclaration || imports.length > 0) { // If there is a class to declare or if there are default imports then add them to code
         code = await parseCode(code, languageObject, imports);
     }
 
-    if (languageObject.languageCode) language = languageObject.languageCode;
+    if (languageObject.languageCode) {
+        language = languageObject.languageCode;
+    }
     if (languageObject.compilerArgs) {
         compilerArgs = languageObject.compilerArgs.join(' ');
     } else {
         compilerArgs = '';
     }
 
-    outputResult(language, code, compilerArgs, (output) => callback(output) );
-    return 0;
+    return outputResult(language, code, compilerArgs);
 }
 
 module.exports = {
