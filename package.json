@@ -4,7 +4,8 @@
   "description": "api to execute code, extension of rextester for easier requests",
   "main": "index.js",
   "scripts": {
-    "test": "PORT= 8181 node index.js"
+    "pm2start": "node run.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
