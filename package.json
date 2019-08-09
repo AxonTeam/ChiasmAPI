@@ -1,14 +1,14 @@
 {
-  "name": "evaluator",
+  "name": "chiasm",
   "version": "1.0.0",
-  "description": "api handler for axonteam",
+  "description": "api to execute code, extension of rextester for easier requests",
   "main": "index.js",
   "scripts": {
     "test": "PORT= 8181 node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jacherr/Evaluator.git"
+    "url": "git+https://github.com/AxonTeam/ChiasmAPI.git"
   },
   "keywords": [
     "api"
@@ -16,9 +16,9 @@
   "author": "Jacher#9891 / CoalSephos#7566",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Jacherr/Evaluator/issues"
+    "url": "https://github.com/AxonTeam/ChiasmAPI/issues"
   },
-  "homepage": "https://github.com/Jacherr/Evaluator#readme",
+  "homepage": "https://github.com/AxonTeam/ChiasmAPI#readme",
   "dependencies": {
     "superagent": "^5.0.2",
     "body-parser": "^1.18.3",
