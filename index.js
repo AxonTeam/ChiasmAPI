@@ -24,7 +24,7 @@ app.get('/languages', (req, res) => {
 } );
 
 app.post('/', (req, res) => {
-    // expecting body = {lang: 'language' < STR >, code: 'code' < STR >}
+    // expecting body = {lang: 'language' < STR >, code: 'code' < STR >, imports: ['imports'] < ARR >}
     // example req = superagent.post('api').send({lang: 'java', code: 'System.out.println("hello world")', imports: ['System']});
     handleRequest(req.body.lang, req.body.code, req.body.imports, (request) => {
         // eslint-disable-next-line no-magic-numbers
