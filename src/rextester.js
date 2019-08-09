@@ -84,12 +84,7 @@ async function handleRequest(language, code, imports, callback) {
 
     code = code.split(' ');
 
-
-    languageProperties.languageProperties.forEach(curobject => { //Fetch the language that the user wants to use
-        if (curobject.aliases.includes(language.toString())) {
-            languageObject = curobject
-        }
-    });
+    const languageObject = languageProperties.languageProperties.find(curobject => curobject.aliases.includes(language.toString()));
 
     if (!languageObject) return callback({
         payload: 'Unsupported language',
