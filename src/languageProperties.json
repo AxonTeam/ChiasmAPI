@@ -1,0 +1,92 @@
+{
+    "languageProperties": [
+        {
+            "commonName": "C#",
+            "name": "c#",
+            "importType": "using",
+            "lineBreak": ";",
+            "defaultImports": ["System"],
+            "aliases": ["1", "c#"],
+            "classDeclaration": "namespace Rextester\n{\npublic class Program\n{\npublic static void Main(string[] args)\n{\n{{code}}\n}\n}\n}",
+            "languageCode": "1",
+            "compilerArgs": null           
+        },
+        {
+            "commonName": "Java",
+            "name": "java",
+            "importType": "import",
+            "lineBreak": ";",
+            "defaultImports": ["java.lang.*"],
+            "aliases": ["4", "java"],
+            "classDeclaration": "class Rextester\n{\npublic static void main(String args[])\n{\n{{code}}\n}\n}",
+            "languageCode": "4",
+            "compilerArgs": null
+        },
+        {
+            "commonName": "Visual Basic",
+            "name": "vb",
+            "importType": "Imports",
+            "lineBreak": "",
+            "defaultImports": ["System", "System.Collections.Generic", "System.Linq", "System.Text.RegularExpressions"],
+            "aliases": ["visualbasic", "2", "vb"],
+            "classDeclaration": "Namespace Rextester\nPublic Module Program\nPublic Sub Main(args() As string)\n{{code}}\nEnd Sub\nEnd Module\nEnd Namespace",
+            "languageCode": "2",
+            "compilerArgs": null
+        },
+        {
+            "commonName": "Python",
+            "name": "py",
+            "importType": "import",
+            "lineBreak": "",
+            "defaultImports": ["math", "random"],
+            "aliases": ["python", "python3", "py3", "5", "py"],
+            "classDeclaration": null,
+            "languageCode": "5",
+            "compilerArgs": null
+        },
+        {
+            "commonName": "Node.js",
+            "name": "node",
+            "importType": null,
+            "lineBreak": ";",
+            "defaultImports": [],
+            "aliases": ["node", "node.js", "23"],
+            "classDeclaration": null,
+            "languageCode": "23",
+            "compilerArgs": null
+        },
+        {
+            "commonName": "Ruby",
+            "name": "ruby",
+            "importType": null,
+            "lineBreak": "",
+            "defaultImports": [],
+            "aliases": ["ruby", "rb", "12"],
+            "classDeclaration": null,
+            "languageCode": "12",
+            "compilerArgs": null
+        }, 
+        {
+            "commonName": "TCL",
+            "name": "tcl",
+            "importType": null,
+            "lineBreak": "",
+            "defaultImports": [],
+            "aliases": ["tcl", "32"],
+            "classDeclaration": null,
+            "languageCode": "32",
+            "compilerArgs": null
+        },
+        {
+            "commonName": "C++",
+            "name": "c++",
+            "importType": "#include",
+            "lineBreak": ";",
+            "defaultImports": ["<iostream>"],
+            "aliases": ["28", "c++", "cpp"],
+            "classDeclaration": "int main()\n{\n{{code}}\n}",
+            "languageCode": "28",
+            "compilerArgs": ["-o a.exe", "source_file.cpp"]
+        }
+    ]
+}
