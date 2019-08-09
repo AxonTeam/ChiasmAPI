@@ -75,7 +75,6 @@ async function outputResult(language, code, compilerArgs, callback) {
 
 async function handleRequest(language, code, imports, callback) {
     let languageObject;
-    let imports = [];
     let compilerArgs;
 
     if (!code || !code[0]) return callback({
