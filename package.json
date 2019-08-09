@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/AxonTeam/ChiasmAPI#readme",
   "dependencies": {
-    "@axonteam/eslint-config": "^2.1.1",
+    "@axonteam/eslint-config": "^2.2.0",
     "body-parser": "^1.18.3",
     "eslint": "^6.1.0",
     "express": "^4.16.4",

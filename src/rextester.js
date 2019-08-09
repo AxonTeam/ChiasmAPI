@@ -79,7 +79,7 @@ async function outputResult(language, code, compilerArgs) {
 
 async function handleRequest(language, code, imports) {
     let compilerArgs;
-    
+
     if (!code || !code[0] ) {
         return {
             payload: 'no code/lang???',
@@ -92,18 +92,22 @@ async function handleRequest(language, code, imports) {
 
     const languageObject = languageProperties.languageProperties.find(curobject => curobject.aliases.includes(language.toString() ) );
 
-    if (!languageObject) return {
-        payload: 'Unsupported language',
-        error: false,
-        code: 400,
-    };
+    if (!languageObject) {
+        return {
+            payload: 'Unsupported language',
+            error: false,
+            code: 400,
+        };
+    }
 
     code.join(' ');
     if (languageObject.defaultImports.length > 0 || languageObject.classDeclaration || imports.length > 0) { // If there is a class to declare or if there are default imports then add them to code
         code = await parseCode(code, languageObject, imports);
     }
 
-    if (languageObject.languageCode) language = languageObject.languageCode;
+    if (languageObject.languageCode) {
+        language = languageObject.languageCode;
+    }
     if (languageObject.compilerArgs) {
         compilerArgs = languageObject.compilerArgs.join(' ');
     } else {
