@@ -13,7 +13,7 @@ POST requests to run code should be made in the form `{lang: [language], code: [
 An example request with Superagent would look like:
 ```javascript
     let a = await superagent
-    .post('http://167.86.72.246:4840/')
+    .post('IP:PORT')
     .set({
         "Content-Type": "application/json"
     })
