@@ -4,9 +4,9 @@ const superagent = require('superagent')
 function parseCode(code, languageObject, imports) {
     if (languageObject.classDeclaration) { //Add class declaration and replace {{code}} with the user's code
         let classDec = languageObject.classDeclaration
-        classDec = classDec.replace("{{code}}", code)
+        classDec = classDec.replace("{{code}}", code.join(" "))
         code = classDec
-    }
+    } else code = code.join(" ")
     let i = 0
     imports.forEach(element => { //If import already exists in defaults then remove it from the array
         if (languageObject.defaultImports.includes(element)) {
@@ -20,18 +20,8 @@ function parseCode(code, languageObject, imports) {
     imports.forEach(element => { //Add the imports to the top of the code
         code = `${languageObject.importType} ${element}${languageObject.lineBreak}\n${code}`
     });
+    console.log(code)
     return code
-}
-
-function parseLanguages(args, imports) { //Add the imports to the array that were user-added
-    for (let i = 2; i < args.length; i++) {
-        if (args[i].endsWith(';')) {
-            imports.push(args[i].substr(0, args[i].length - 1));
-            i = args.length + 1;
-        } else {
-            imports.push(args[i]);
-        }
-    };
 }
 
 async function outputResult(language, code, compilerArgs, callback) {
@@ -83,8 +73,7 @@ async function outputResult(language, code, compilerArgs, callback) {
     return callback(r);
 }
 
-async function handleRequest(language, code, callback) {
-    let parseLangs = languageProperties.languageProperties.filter(i => i.classDeclaration != undefined).map(j => j.name); //The languages that have defined classes
+async function handleRequest(language, code, imports, callback) {
     let languageObject;
     let imports = [];
     let compilerArgs;
@@ -96,6 +85,7 @@ async function handleRequest(language, code, callback) {
     });
 
     code = code.split(' ');
+
 
     languageProperties.languageProperties.forEach(curobject => { //Fetch the language that the user wants to use
         if (curobject.aliases.includes(language.toString())) {
@@ -109,16 +99,11 @@ async function handleRequest(language, code, callback) {
         code: 400
     });
 
-    if (parseLangs.includes(languageObject.name) && code[0] == languageObject.importType) { //If there are imports to parse then parse them
-        parseLanguages(code, imports)
-    };
-    if (code[0] == languageObject.importType && parseLangs.includes(languageObject.name)) { //Remove the imports after they have been parsed
-        code.splice(0, imports.length + 1)
-    }
     code.join(" ")
-    if (languageObject.defaultImports.length > 0 || languageObject.classDeclaration) { //If there is a class to declare or if there are default imports then add them to code
+    if (languageObject.defaultImports.length > 0 || languageObject.classDeclaration || imports.length > 0) { //If there is a class to declare or if there are default imports then add them to code
         code = await parseCode(code, languageObject, imports)
     }
+
     if(languageObject.languageCode) language = languageObject.languageCode
     if(languageObject.compilerArgs) {
         compilerArgs = languageObject.compilerArgs.join(" ")
@@ -129,7 +114,6 @@ async function handleRequest(language, code, callback) {
     outputResult(language, code, compilerArgs, async function (output) {
         return await callback(output);
     });
-
 };
 
 module.exports = {
