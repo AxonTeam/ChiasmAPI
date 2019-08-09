@@ -79,7 +79,7 @@ async function outputResult(language, code, compilerArgs) {
 
 async function handleRequest(language, code, imports, callback) {
     let compilerArgs;
-
+    
     if (!code || !code[0] ) {
         return callback( {
             payload: 'no code/lang???',
