@@ -77,26 +77,26 @@ async function outputResult(language, code, compilerArgs) {
     return requestResponse;
 }
 
-async function handleRequest(language, code, imports, callback) {
+async function handleRequest(language, code, imports) {
     let compilerArgs;
     
     if (!code || !code[0] ) {
-        return callback( {
+        return {
             payload: 'no code/lang???',
             error: false,
             code: 400,
-        } );
+        };
     }
 
     code = code.split(' ');
 
     const languageObject = languageProperties.languageProperties.find(curobject => curobject.aliases.includes(language.toString() ) );
 
-    if (!languageObject) return callback( {
+    if (!languageObject) return {
         payload: 'Unsupported language',
         error: false,
         code: 400,
-    } );
+    };
 
     code.join(' ');
     if (languageObject.defaultImports.length > 0 || languageObject.classDeclaration || imports.length > 0) { // If there is a class to declare or if there are default imports then add them to code
