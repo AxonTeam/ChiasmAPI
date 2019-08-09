@@ -23,7 +23,7 @@ function parseCode(code, languageObject, imports) {
     return code;
 }
 
-async function outputResult(language, code, compilerArgs, callback) {
+async function outputResult(language, code, compilerArgs) {
     let requestResponse,
         rextesterResponse;
     try {
@@ -74,7 +74,7 @@ async function outputResult(language, code, compilerArgs, callback) {
             };
         }
     }
-    return callback(requestResponse);
+    return requestResponse;
 }
 
 async function handleRequest(language, code, imports, callback) {
@@ -110,8 +110,7 @@ async function handleRequest(language, code, imports, callback) {
         compilerArgs = '';
     }
 
-    outputResult(language, code, compilerArgs, (output) => callback(output) );
-    return 0;
+    return outputResult(language, code, compilerArgs);
 }
 
 module.exports = {
