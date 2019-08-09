@@ -6,7 +6,9 @@ function parseCode(code, languageObject, imports) {
         let classDec = languageObject.classDeclaration;
         classDec = classDec.replace('{{code}}', code.join(' ') );
         code = classDec;
-    } else code = code.join(' ');
+    } else {
+        code = code.join(' ');
+    }
     imports.forEach( (element, i) => { // If import already exists in defaults then remove it from the array
         if (languageObject.defaultImports.includes(element) ) {
             imports.splice(i, 1);
@@ -22,10 +24,10 @@ function parseCode(code, languageObject, imports) {
 }
 
 async function outputResult(language, code, compilerArgs, callback) {
-    let r,
-        response;
+    let requestResponse,
+        rextesterResponse;
     try {
-        response = await superagent
+        rextesterResponse = await superagent
             .post('https://rextester.com/rundotnet/api')
             .set( {
                 'Content-Type': 'application/json',
@@ -37,49 +39,54 @@ async function outputResult(language, code, compilerArgs, callback) {
                 CompilerArgs: compilerArgs,
             } );
     } catch (err) {
-        r = {
+        requestResponse = {
             payload: err.toString(),
             error: false,
             code: 400,
         };
     }
-    if (response.body.Result) {
-        if (response.body.Result.length === 0)
-            r = {
+    if (rextesterResponse.body.Result) {
+        if (rextesterResponse.body.Result.length === 0) {
+            requestResponse = {
                 payload: 'Empty response',
                 error: false,
                 code: 200,
             };
-        else
-            r = {
-                payload: response.body.Result,
+        } else {
+            requestResponse = {
+                payload: rextesterResponse.body.Result,
                 error: false,
                 code: 200,
             };
-    } else if (response.body.Errors) {
-        if (response.body.Errors.length === 0) r = {
-            payload: 'Empty response (errored)',
-            error: true,
-            code: 200,
-        };
-        else
-            r = {
-                payload: response.body.Errors,
+        }
+    } else if (rextesterResponse.body.Errors) {
+        if (rextesterResponse.body.Errors.length === 0) {
+            requestResponse = {
+                payload: 'Empty response (errored)',
                 error: true,
                 code: 200,
             };
+        } else {
+            requestResponse = {
+                payload: rextesterResponse.body.Errors,
+                error: true,
+                code: 200,
+            };
+        }
     }
-    return callback(r);
+    return callback(requestResponse);
 }
 
 async function handleRequest(language, code, imports, callback) {
     let compilerArgs;
 
-    if (!code || !code[0] ) return callback( {
-        payload: 'no code/lang???',
-        error: false,
-        code: 400,
-    } );
+    if (!code || !code[0] ) {
+        return callback( {
+            payload: 'no code/lang???',
+            error: false,
+            code: 400,
+        } );
+    }
 
     code = code.split(' ');
 
