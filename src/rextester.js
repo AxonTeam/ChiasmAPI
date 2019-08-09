@@ -20,7 +20,6 @@ function parseCode(code, languageObject, imports) {
     imports.forEach(element => { //Add the imports to the top of the code
         code = `${languageObject.importType} ${element}${languageObject.lineBreak}\n${code}`
     });
-    console.log(code)
     return code
 }
 

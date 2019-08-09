@@ -20,6 +20,7 @@ An example request with Superagent would look like:
     .send({
         lang: 'java',
         code: 'System.out.println("a");'
+        imports: [`System.*`]
     })
     console.log(a.text)
 ```
