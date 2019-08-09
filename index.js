@@ -23,10 +23,10 @@ app.get('/languages', (req, res) => {
     return res.send(langArray.join('\n\n') ).end();
 } );
 
-app.post('/', async(req, res) => {
+app.post('/', (req, res) => {
     // expecting body = {lang: 'language' < STR >, code: 'code' < STR >}
     // example req = superagent.post('api').send({lang: 'java', code: 'System.out.println("hello world")', imports: ['System']});
-    await handleRequest(req.body.lang, req.body.code, req.body.imports, (request) => {
+    handleRequest(req.body.lang, req.body.code, req.body.imports, (request) => {
         // eslint-disable-next-line no-magic-numbers
         if (request.code !== 200) {
             res.status(request.code);

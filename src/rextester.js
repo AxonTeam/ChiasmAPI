@@ -110,7 +110,7 @@ async function handleRequest(language, code, imports, callback) {
         compilerArgs = '';
     }
 
-    outputResult(language, code, compilerArgs, async(output) => callback(output) );
+    outputResult(language, code, compilerArgs, (output) => callback(output) );
     return 0;
 }
 
